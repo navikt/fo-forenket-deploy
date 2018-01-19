@@ -7,10 +7,7 @@ import no.nav.fo.forenkletdeploy.service.VeraDeployService;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,21 +26,16 @@ public class DeployResource {
     }
 
     @GET
-    public List<VeraDeploy> getAllDeploys() {
-        List<String> applications = applicationService.getApps().stream()
-                .map(ApplicationConfig::getName)
-                .collect(Collectors.toList());
-
-        return veraDeployService.getVeraDeploys().stream()
-                .filter(deploy -> gyldigeMiljoer.contains(deploy.environment))
-                .filter(deploy -> applications.contains(deploy.application))
-                .collect(Collectors.toList());
+    public List<VeraDeploy> getAllDeploys(
+            @QueryParam("team") String teamId
+    ) {
+        return getVeraDeploys(applicationService.getAppsByTeam(teamId));
     }
 
     @GET
     @Path("/{application}")
     public List<VeraDeploy> getAllDeploysForApplication(@PathParam("application") String application) {
-        return getAllDeploys().stream()
+        return getVeraDeploys(applicationService.getApps()).stream()
                 .filter(veraDeploy -> veraDeploy.application.equalsIgnoreCase(application))
                 .collect(Collectors.toList());
     }
@@ -54,10 +46,21 @@ public class DeployResource {
             @PathParam("application") String application,
             @PathParam("environment") String environment
     ) {
-        return getAllDeploys().stream()
+        return getVeraDeploys(applicationService.getApps()).stream()
                 .filter(deploy -> deploy.application.equalsIgnoreCase(application))
                 .filter(deploy -> deploy.environment.equalsIgnoreCase(environment))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException(String.format("Fant ikke VeraDeploy for %s i %s", application, environment)));
     }
+
+    private List<VeraDeploy> getVeraDeploys(List<ApplicationConfig> applicationConfigs) {
+        List<String> applicationNames = applicationConfigs.stream()
+                .map(ApplicationConfig::getName)
+                .collect(Collectors.toList());
+        return veraDeployService.getVeraDeploys().stream()
+                .filter(deploy -> gyldigeMiljoer.contains(deploy.environment))
+                .filter(deploy -> applicationNames.contains(deploy.application))
+                .collect(Collectors.toList());
+    }
+
 }

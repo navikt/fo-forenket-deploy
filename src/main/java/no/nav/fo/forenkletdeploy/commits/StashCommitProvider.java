@@ -67,7 +67,7 @@ public class StashCommitProvider {
     }
 
     private static String tagRef(String tag) {
-        return "null".equalsIgnoreCase(tag) ? "" : "refs%2Ftags%2F" + tag;
+        return "null".equalsIgnoreCase(tag) ? "" : "refs%2Ftags%2Fmodiabrukerdialog-" + tag;
     }
 
     private static String getNameForCommit(StashCommit commit) {
