@@ -60,5 +60,11 @@ public class ApplicationService {
         teamProvider.getTeams().forEach(Team::hentApplicationConfigs);
     }
 
+    public List<ApplicationConfig> getLibrariesByTeam(String teamId) {
+        return getAppsByTeam(teamId).stream()
+                .filter(app -> app.library)
+                .collect(Collectors.toList());
+    }
+
 }
 

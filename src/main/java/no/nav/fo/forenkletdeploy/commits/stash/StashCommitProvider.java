@@ -1,4 +1,4 @@
-package no.nav.fo.forenkletdeploy.commits;
+package no.nav.fo.forenkletdeploy.commits.stash;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static no.nav.fo.forenkletdeploy.util.Utils.withClient;
+import static no.nav.fo.forenkletdeploy.commits.stash.StashProvider.API_BASE_URL;
 
 public class StashCommitProvider {
     private static final Logger LOGGER = LoggerFactory.getLogger(StashCommitProvider.class);
@@ -49,7 +50,7 @@ public class StashCommitProvider {
 
         if(matcher.find()) {
             String project = matcher.group(1).toLowerCase();
-            return String.format("http://stash.devillo.no/rest/api/1.0/projects/%s/repos/%s/commits", project, application.name);
+            return String.format("%s/projects/%s/repos/%s/commits", API_BASE_URL, project, application.name);
         }
         return "";
     }

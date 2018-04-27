@@ -8,4 +8,5 @@ import lombok.Value;
 public class ApplicationConfig {
     public String name;
     public String gitUrl;
+    public boolean library;
 }

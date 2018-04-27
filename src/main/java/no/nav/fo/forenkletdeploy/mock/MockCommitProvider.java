@@ -1,6 +1,8 @@
 package no.nav.fo.forenkletdeploy.mock;
 
-import no.nav.fo.forenkletdeploy.commits.StashCommitProvider;
+import no.nav.fo.forenkletdeploy.commits.stash.StashCommitProvider;
+import no.nav.fo.forenkletdeploy.commits.stash.StashProvider;
+import no.nav.fo.forenkletdeploy.commits.stash.StashTagProvider;
 import no.nav.fo.forenkletdeploy.domain.ApplicationConfig;
 import no.nav.fo.forenkletdeploy.domain.Commit;
 import org.springframework.stereotype.Component;
@@ -9,7 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class MockCommitProvider extends StashCommitProvider {
+public class MockCommitProvider extends StashProvider {
+
+    public MockCommitProvider() {
+        super(null, null);
+    }
+
     private static Long getMinutesAgo(Integer minutes) {
         return (System.currentTimeMillis()) - (minutes * 60 * 1000);
     }

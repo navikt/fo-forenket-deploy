@@ -25,6 +25,9 @@
     <cache alias="commits" uses-template="medium">
         <heap>5000</heap>
     </cache>
+    <cache alias="tags" uses-template="medium">
+        <heap>5000</heap>
+    </cache>
 
     <!-- templates -->
     <cache-template name="short">
