@@ -1,5 +1,6 @@
 package no.nav.fo.forenkletdeploy.commits;
 
+import no.nav.fo.forenkletdeploy.commits.stash.StashCommitProvider;
 import no.nav.fo.forenkletdeploy.domain.ApplicationConfig;
 import org.junit.Test;
 

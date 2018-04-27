@@ -43,11 +43,12 @@ public class TeamOppfolging implements Team {
     public void hentApplicationConfigs() {
         try {
             String json = withClient(c -> c.target(APPLICATION_CONFIG_URL).request().get(String.class));
-            Map<String, Map<String, String>> map = fromJson(json, Map.class);
+            Map<String, Map<String, Object>> map = fromJson(json, Map.class);
             this.applicationConfigs = map.entrySet().stream()
                     .map(entry -> ApplicationConfig.builder()
                             .name(entry.getKey())
-                            .gitUrl(entry.getValue().get("gitUrl"))
+                            .gitUrl((String) entry.getValue().get("gitUrl"))
+                            .library((Boolean) entry.getValue().getOrDefault("library", Boolean.FALSE))
                             .build()
                     )
                     .collect(toList());
