@@ -4,16 +4,16 @@ import no.nav.fo.forenkletdeploy.domain.ApplicationConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.core.MediaType;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
-
-import static no.nav.json.JsonUtils.fromJson;
-import static no.nav.sbl.rest.RestUtils.withClient;
-import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
+import static no.nav.fo.forenkletdeploy.util.Utils.fromJson;
+import static no.nav.fo.forenkletdeploy.util.Utils.getRequiredProperty;
+import static no.nav.fo.forenkletdeploy.util.Utils.withClient;
 
 
 public class TeamSoknad implements Team {
@@ -47,10 +47,10 @@ public class TeamSoknad implements Team {
             String configUrl = "https://raw.githubusercontent.com/navikt/jenkins-dsl-scripts/master/team_soknad/config.json";
             String apiToken = getRequiredProperty("GITHUB_JENKINSPUS_TOKEN");
 
-            String json = withClient(c -> c.target(configUrl)
-                    .request()
+            String json = withClient(configUrl)
+                    .request(MediaType.APPLICATION_JSON)
                     .header("Authorization", "token " + apiToken)
-                    .get(String.class));
+                    .get(String.class);
 
             Map<String, Map<String, String>> map = fromJson(json, Map.class);
             this.applicationConfigs = map.entrySet().stream()

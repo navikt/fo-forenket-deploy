@@ -9,8 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static no.nav.sbl.rest.RestUtils.LONG_READ_CONFIG;
-import static no.nav.sbl.rest.RestUtils.withClient;
+import static no.nav.fo.forenkletdeploy.util.Utils.withClient;
 
 @Component
 public class JiraIssueService {
@@ -29,20 +28,20 @@ public class JiraIssueService {
     @SuppressWarnings("unchecked")
     @Cacheable("jiraissues")
     public List<JiraIssue> getUserStories() {
-        return withClient(LONG_READ_CONFIG, c -> c.target("https://jira.adeo.no/rest/api/2/search")
+        return withClient("https://jira.adeo.no/rest/api/2/search")
                 .queryParam("jql", FO_JQL)
                 .queryParam("maxResults", 500)
                 .request()
-                .get(JiraIssues.class))
+                .get(JiraIssues.class)
                 .issues;
     }
 
     @SuppressWarnings("unchecked")
     @Cacheable("jiraissue")
     public JiraIssue getUserStory(String issueId) {
-        return withClient(c -> c.target("https://jira.adeo.no/rest/api/2/issue/" + issueId)
+        return withClient("https://jira.adeo.no/rest/api/2/issue/" + issueId)
                 .request()
-                .get(JiraIssue.class));
+                .get(JiraIssue.class);
     }
 }
 

@@ -1,4 +1,4 @@
-package no.nav.fo.forenkletdeploy;
+package no.nav.fo.forenkletdeploy.util;
 
 import org.springframework.cache.interceptor.KeyGenerator;
 

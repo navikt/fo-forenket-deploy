@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
-import static no.nav.json.JsonUtils.fromJson;
-import static no.nav.sbl.rest.RestUtils.withClient;
-import static no.nav.sbl.util.EnvironmentUtils.getRequiredProperty;
+import static no.nav.fo.forenkletdeploy.util.Utils.fromJson;
+import static no.nav.fo.forenkletdeploy.util.Utils.getRequiredProperty;
+import static no.nav.fo.forenkletdeploy.util.Utils.withClient;
 
 public class FOTeam implements Team {
     private Logger logger = LoggerFactory.getLogger(FOTeam.class.getName());
@@ -51,10 +51,10 @@ public class FOTeam implements Team {
         try {
             String apiToken = getRequiredProperty("GITHUB_JENKINSPUS_TOKEN");
             String configUrl = "https://raw.githubusercontent.com/navikt/jenkins-dsl-scripts/master/forenklet_oppfolging/config.json";
-            String json = withClient(c -> c.target(configUrl)
+            String json = withClient(configUrl)
                     .request()
                     .header("Authorization", "token " + apiToken)
-                    .get(String.class));
+                    .get(String.class);
             Map<String, Map<String, String>> map = fromJson(json, Map.class);
 
             List<ApplicationConfig> applications = map.entrySet().stream()

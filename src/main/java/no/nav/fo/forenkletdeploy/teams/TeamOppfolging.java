@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
-import static no.nav.json.JsonUtils.fromJson;
-import static no.nav.sbl.rest.RestUtils.withClient;
+import static no.nav.fo.forenkletdeploy.util.Utils.fromJson;
+import static no.nav.fo.forenkletdeploy.util.Utils.withClient;
 
 public class TeamOppfolging implements Team {
     private Logger logger = LoggerFactory.getLogger(TeamOppfolging.class.getName());
@@ -42,7 +42,7 @@ public class TeamOppfolging implements Team {
     @Override
     public void hentApplicationConfigs() {
         try {
-            String json = withClient(c -> c.target(APPLICATION_CONFIG_URL).request().get(String.class));
+            String json = withClient(APPLICATION_CONFIG_URL).request().get(String.class);
             Map<String, Map<String, Object>> map = fromJson(json, Map.class);
             this.applicationConfigs = map.entrySet().stream()
                     .map(entry -> ApplicationConfig.builder()

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static no.nav.fo.forenkletdeploy.util.Utils.getRequiredProperty;
+
 @Component
 public class UnleashService {
     private DefaultUnleash unleash;
@@ -18,7 +20,7 @@ public class UnleashService {
 
     public UnleashService() {
         String instanceId = getEnvironment();
-        String apiUrl = getApiUrl();
+        String apiUrl = getRequiredProperty("UNLEASH_API_URL");
         LOG.info(String.format("Setting up unleash with instance: '%s' with uri: '%s'", instanceId, apiUrl));
 
         UnleashConfig config = UnleashConfig.builder()
@@ -43,10 +45,5 @@ public class UnleashService {
         return Optional.ofNullable(System.getenv("FASIT_ENVIRONMENT_NAME"))
                 .orElse("local");
 
-    }
-
-    public static String getApiUrl() {
-        return Optional.ofNullable(System.getenv("UNLEASH_API_URL"))
-                .orElse("https://unleash.nais.preprod.local/api/");
     }
 }

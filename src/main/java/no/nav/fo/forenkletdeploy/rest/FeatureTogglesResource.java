@@ -3,14 +3,15 @@ package no.nav.fo.forenkletdeploy.rest;
 import no.nav.fo.forenkletdeploy.domain.FeatureToggle;
 import no.nav.fo.forenkletdeploy.service.UnleashService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 
-@Path("/featuretoggles")
-@Component
+@RestController
+@RequestMapping("/api/featuretoggles")
 public class FeatureTogglesResource {
     private UnleashService unleashService;
 
@@ -19,9 +20,8 @@ public class FeatureTogglesResource {
         this.unleashService = unleashService;
     }
 
-    @GET
-    @Path("/{togglename}")
-    public FeatureToggle getToggleByName(@PathParam("togglename") String togglename) {
+    @GetMapping("/{togglename}")
+    public FeatureToggle getToggleByName(@PathVariable("togglename") String togglename) {
         return FeatureToggle.builder()
                 .name(togglename)
                 .enabled(unleashService.isEnabled(togglename))

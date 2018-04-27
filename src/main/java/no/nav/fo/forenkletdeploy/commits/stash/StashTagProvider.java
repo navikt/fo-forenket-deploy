@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static no.nav.fo.forenkletdeploy.commits.stash.StashProvider.API_BASE_URL;
-import static no.nav.sbl.rest.RestUtils.withClient;
+import static no.nav.fo.forenkletdeploy.util.Utils.withClient;
 
 @Component
 public class StashTagProvider {
@@ -34,11 +34,11 @@ public class StashTagProvider {
         String url = getRestUriForRepo(application);
         LOGGER.info(String.format("Henter tags for %s", application.name));
         try {
-            return withClient(c -> c.target(url)
+            return withClient(url)
                     .queryParam("limit", LIMIT)
                     .request()
                     .get(StashTags.class)
-            ).values.stream();
+                    .values.stream();
         } catch (Throwable t) {
             LOGGER.error("Feil ved henting av commits for " + application.name + " via " + url, t);
             return (new ArrayList<StashTag>()).stream();

@@ -4,6 +4,7 @@
 .idea
 .idea/*
 !.idea/runConfigurations/
+APP_LOG_HOME_IS_UNDEFINED/
 
 src/frontend/node_modules/
 src/frontend/build/
@@ -12,3 +13,4 @@ src/frontend/public/index.css*
 
 target/
 node_modules/
+static/

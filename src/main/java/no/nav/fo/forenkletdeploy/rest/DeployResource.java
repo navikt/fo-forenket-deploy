@@ -4,16 +4,17 @@ import no.nav.fo.forenkletdeploy.domain.ApplicationConfig;
 import no.nav.fo.forenkletdeploy.domain.VeraDeploy;
 import no.nav.fo.forenkletdeploy.service.ApplicationService;
 import no.nav.fo.forenkletdeploy.service.VeraDeployService;
+import no.nav.fo.forenkletdeploy.util.NotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Path("/deploy")
-@Component
+@RestController
+@RequestMapping("/api/deploy")
 public class DeployResource {
     private final VeraDeployService veraDeployService;
     private final ApplicationService applicationService;
@@ -25,26 +26,24 @@ public class DeployResource {
         this.applicationService = applicationService;
     }
 
-    @GET
+    @GetMapping
     public List<VeraDeploy> getAllDeploys(
-            @QueryParam("team") String teamId
+            @RequestParam("team") String teamId
     ) {
         return getVeraDeploys(applicationService.getAppsByTeam(teamId));
     }
 
-    @GET
-    @Path("/{application}")
-    public List<VeraDeploy> getAllDeploysForApplication(@PathParam("application") String application) {
+    @GetMapping("/{application}")
+    public List<VeraDeploy> getAllDeploysForApplication(@PathVariable("application") String application) {
         return getVeraDeploys(applicationService.getApps()).stream()
                 .filter(veraDeploy -> veraDeploy.application.equalsIgnoreCase(application))
                 .collect(Collectors.toList());
     }
 
-    @GET
-    @Path("/{application}/{environment}")
+    @GetMapping("/{application}/{environment}")
     public VeraDeploy getDeploy(
-            @PathParam("application") String application,
-            @PathParam("environment") String environment
+            @PathVariable("application") String application,
+            @PathVariable("environment") String environment
     ) {
         return getVeraDeploys(applicationService.getApps()).stream()
                 .filter(deploy -> deploy.application.equalsIgnoreCase(application))

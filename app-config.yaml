@@ -4,7 +4,7 @@ replicas:
   min: 2
   max: 3
   cpuThresholdPercentage: 50
-port: 8080
+port: 8800
 healthcheck:
   liveness:
     path: internal/isAlive

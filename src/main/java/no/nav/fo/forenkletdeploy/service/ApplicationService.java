@@ -31,7 +31,7 @@ public class ApplicationService {
         return getAllAppConfigurations();
     }
 
-    private List<ApplicationConfig> getAllAppConfigurations() {
+    protected List<ApplicationConfig> getAllAppConfigurations() {
         return teamProvider.getTeams().stream()
                 .flatMap(team -> team.getApplicationConfigs().stream())
                 .collect(Collectors.toList());
