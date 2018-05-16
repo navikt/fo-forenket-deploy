@@ -1,5 +1,7 @@
 # FO: Forenklet deploy
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/navikt/fo-forenklet-deploy.svg)](https://greenkeeper.io/)
+
 [![CircleCI](https://circleci.com/gh/navikt/fo-forenklet-deploy/tree/master.svg?style=svg)](https://circleci.com/gh/navikt/fo-forenklet-deploy/tree/master)
 
 En applikasjon som viser oversikt over versjoner av et team sine applikasjoner, per miljø.

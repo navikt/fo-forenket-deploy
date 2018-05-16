@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { Dispatch } from 'redux';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Innholdstittel, Undertittel } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import ConmmitsForRelease from './commits-for-release';

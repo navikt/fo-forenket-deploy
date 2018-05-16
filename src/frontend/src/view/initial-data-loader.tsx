@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Action } from 'redux';
-import { connect, Dispatch } from 'react-redux';
+import { Action, Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AppState } from '../redux/reducer';
 import { getAllTeams } from '../redux/team-duck';

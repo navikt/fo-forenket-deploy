@@ -14,7 +14,10 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
 
+      - run: sudo npm install -g greenkeeper-lockfile
+      - run: greenkeeper-lockfile-update
       - run: npm install
+      - run: greenkeeper-lockfile-upload
 
       - save_cache:
           paths:

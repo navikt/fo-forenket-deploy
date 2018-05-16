@@ -1,0 +1,9 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "src/frontend/package.json"
+      ]
+    }
+  }
+}
