@@ -9,6 +9,10 @@ import javax.inject.Inject
 @RequestMapping("/api/jira")
 class JiraIssueResource @Inject
 constructor(val jiraService: JiraService) {
+    @GetMapping
+    fun getJiraIssues(@RequestParam(name = "issue") issues: List<String>) =
+        issues.map { jiraService.getUserStory(issueId = it) }
+
     @GetMapping("/{issueid}")
     fun getJiraIssue(@PathVariable("issueid") issueid: String) =
             jiraService.getUserStory(issueid).copy(key = issueid)
