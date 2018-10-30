@@ -14,7 +14,7 @@ constructor(
         val veraConsumer: VeraConsumer
 ) {
     private val LOG = LoggerFactory.getLogger(VeraDeployService::class.java)
-    private val gyldigeMiljoer = Arrays.asList("p", "q0", "q1", "q10", "q7", "q6", "t6", "t10")
+    private val gyldigeMiljoer = Arrays.asList("p", "q0", "q10", "q6", "t6", "t10")
 
     fun getDeploysForTeam(teamId: String): List<VeraDeploy> =
             teamService.getAppsForTeam(teamId)
